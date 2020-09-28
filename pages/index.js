@@ -35,12 +35,15 @@ export async function getServerSideProps({ req, query }) {
     console.log('[getServerSideProps]')
   const protocol = req.headers['x-forwarded-proto'] || 'http'
   const host = req.headers['x-forwarded-host'] || '127.0.0.1'
+  const port = 3000
   const page = query.page || 1
   const limit = query.limit || 9
+  console.log(req.headers)
   console.log({
     protocol,
     host
   })
+  console.log(`${protocol}://${host}:${port}/api/users?page=${page}&limit=${limit}`)
   const res = await fetch(
     `${protocol}://${host}/api/users?page=${page}&limit=${limit}`
   )

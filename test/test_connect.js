@@ -1,39 +1,18 @@
-// import ServerlessClient from 'serverless-pg'
-
-// const client = new ServerlessClient({
-//     user: process.env.DB_USER,
-//     host: process.env.DB_HOST,
-//     database: process.env.DB_NAME,
-//     password: process.env.DB_PASSWORD,
-//     // port: process.env.DB_PORT
-// });
- 
-// const handler = async(event, context) => {
-//     await client.sconnect();
-//     const result = await client.query(`SELECT NOW()`);
-//     await client.clean();
-//     return {
-//       body: JSON.stringify({message: result}),
-//       statusCode: 200
-//     }
-// }
- 
 const http = require('http');
 const ServerlessClient = require("../node_modules/serverless-postgres/index.js");
 
 const hostname = '127.0.0.1';
 const port = 7000;
 
-
-
 let page =  1
 const limit = 9
 
 const server = http.createServer(async (req, res) => {
+  console.log({ env: process.env })
   try {
     const client = new ServerlessClient({
       user: process.env.DB_USER,
-      host: "localhost",
+      host: process.env.DB_HOST,
       database: process.env.DB_NAME,
       password: process.env.DB_PASSWORD,
       port: process.env.DB_PORT
