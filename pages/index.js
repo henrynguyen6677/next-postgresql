@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 function HomePage({ users, page, pageCount }) {
+  console.log(users)
   return (
     <>
       <ul>
@@ -9,7 +10,7 @@ function HomePage({ users, page, pageCount }) {
             <Link href={`/user?id=${p.id}`}>
               <a>
                 <img src={p.avatar} />
-                <span>{p.name}</span>
+                <span>Name: {p.username}</span>
               </a>
             </Link>
           </li>
@@ -32,20 +33,15 @@ function HomePage({ users, page, pageCount }) {
 }
 
 export async function getServerSideProps({ req, query }) {
-    console.log('[getServerSideProps]')
+  console.log('[getServerSideProps]')
   const protocol = req.headers['x-forwarded-proto'] || 'http'
   const host = req.headers['x-forwarded-host'] || '127.0.0.1'
   const port = 3000
   const page = query.page || 1
-  const limit = query.limit || 9
-  console.log(req.headers)
-  console.log({
-    protocol,
-    host
-  })
-  console.log(`${protocol}://${host}:${port}/api/users?page=${page}&limit=${limit}`)
+  const limit = query.limit || 3
+
   const res = await fetch(
-    `${protocol}://${host}/api/users?page=${page}&limit=${limit}`
+    `${protocol}://${host}:${port}/api/users?page=${page}&limit=${limit}`
   )
   const data = await res.json()
   return { props: data }

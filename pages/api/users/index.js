@@ -3,7 +3,7 @@ import escape from 'sql-template-strings'
 
 module.exports = async (req, res) => {
   let page = parseInt(req.query.page) || 1
-  const limit = parseInt(req.query.limit) || 9
+  const limit = parseInt(req.query.limit) || 3
   if (page < 1) page = 1
 
   const users = await db.query(`
